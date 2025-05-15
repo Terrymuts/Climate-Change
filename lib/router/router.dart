@@ -1,21 +1,30 @@
+import 'package:climate_change/pages/classification_page.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
 
-import '../pages/classification_page.dart';
 import '../pages/home.dart';
+import '../widgets/side_menu.dart';
 
 
-final GoRouter router = GoRouter(
+
+final GoRouter appRouter = GoRouter(
   initialLocation: '/home',
   routes: [
-    GoRoute(
-      path: '/home',
-      name: 'home',
-      builder: (context, state) => HomePage(),
-    ),
-    GoRoute(
-      path: '/classify',
-      name: 'classify',
-      builder: (context, state) => ClassificationPage(),
+    ShellRoute(
+      builder: (context, state, child) {
+        return Scaffold(
+          body: Row(
+            children: [
+              Sidebar(),
+              Expanded(child: child),
+            ],
+          ),
+        );
+      },
+      routes: [
+        GoRoute(path: '/home', builder: (_, __) => HomePage()),
+        GoRoute(path: '/analytics', builder: (_, __) => ClassificationPage()),
+      ],
     ),
   ],
 );

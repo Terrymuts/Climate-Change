@@ -1,29 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class SideMenu extends StatelessWidget {
+
+class Sidebar extends StatelessWidget {
+  final List<_NavItem> _items = [
+    _NavItem('Home', Icons.home, '/home'),
+    _NavItem('Analytics', Icons.bar_chart, '/analytics'),
+    _NavItem('Settings', Icons.settings, '/settings'),
+    _NavItem('Profile', Icons.person, '/profile'),
+  ];
+
+  Sidebar({super.key});
+
   @override
   Widget build(BuildContext context) {
-    String location = GoRouter.of(context).location;
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+    final String location = GoRouterState.of(context).location;
+    return Container(
+      width: 250,
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(vertical: 40),
+      child: Column(
         children: [
-          DrawerHeader(child: Text('Menu'), decoration: BoxDecoration(color: Colors.blue)),
-          _buildItem(context, '/home', Icons.home, 'Home', location),
-          _buildItem(context, '/classify', Icons.image, 'Classify', location),
+          Text('MyDashboard', style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 30),
+          ..._items.map((item) => ListTile(
+            leading: Icon(item.icon, color: location == item.route ? Colors.blue.shade800 : Colors.grey),
+            title: Text(item.label, style: GoogleFonts.poppins(fontSize: 16)),
+            selected: location == item.route,
+            onTap: () => context.go(item.route),
+          )),
         ],
       ),
     );
   }
+}
 
-  Widget _buildItem(BuildContext context, String path, IconData icon, String label, String location) {
-    final bool selected = (location == path);
-    return ListTile(
-      leading: Icon(icon, color: selected ? Colors.blue : null),
-      title: Text(label, style: TextStyle(color: selected ? Colors.blue : null)),
-      selected: selected,
-      onTap: () => GoRouter.of(context).go(path),
-    );
-  }
+class _NavItem {
+  final String label;
+  final IconData icon;
+  final String route;
+  _NavItem(this.label, this.icon, this.route);
 }

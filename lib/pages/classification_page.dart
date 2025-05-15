@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/classification_controller.dart';
-import '../widgets/side_menu.dart';
+
 
 class ClassificationPage extends StatelessWidget {
   final ClassificationController c = Get.put(ClassificationController());
@@ -12,7 +12,6 @@ class ClassificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Classify Image')),
-      drawer: SideMenu(),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(

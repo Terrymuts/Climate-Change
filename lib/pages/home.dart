@@ -10,7 +10,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Dashboard Home')),
-      drawer: SideMenu(),
       body: Center(child: Text('Welcome to the Image Classification Dashboard!')),
     );
   }
